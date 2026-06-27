@@ -9,3 +9,5 @@ from . import portal_notifications
 from . import portal_security
 from . import portal_settings
 from . import portal_payments
+from . import portal_cart
+from . import portal_lock

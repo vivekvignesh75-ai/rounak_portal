@@ -1,0 +1,97 @@
+/* Rounak Portal: live chat department router */
+$rk-navy: #1B2A4A;
+$rk-primary: #0078D4;
+$rk-border: #EDEBE9;
+$rk-white: #ffffff;
+
+.rounak-livechat-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1050;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: $rk-navy;
+    color: $rk-white;
+    border: none;
+    font-size: 22px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background 0.15s, transform 0.15s;
+
+    &:hover {
+        background: $rk-primary;
+        transform: scale(1.05);
+    }
+}
+
+.rounak-livechat-router {
+    position: fixed;
+    bottom: 88px;
+    right: 24px;
+    z-index: 1051;
+    width: 300px;
+    background: $rk-white;
+    border: 1px solid $rk-border;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.rounak-lc-header {
+    background: $rk-navy;
+    color: $rk-white;
+    padding: 14px 16px;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rounak-lc-close {
+    background: none;
+    border: none;
+    color: $rk-white;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0.7;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.rounak-lc-body {
+    padding: 8px 0;
+}
+
+.rounak-lc-dept {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    color: #323130;
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: background 0.15s;
+
+    i {
+        width: 24px;
+        color: $rk-primary;
+        font-size: 15px;
+        margin-right: 10px;
+    }
+
+    &:hover {
+        background: #F3F2F1;
+        color: $rk-primary;
+    }
+}
+
+.rounak-lc-offline {
+    padding: 0 16px 8px;
+    border-top: 1px solid $rk-border;
+    margin-top: 4px;
+    padding-top: 8px;
+}

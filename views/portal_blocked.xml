@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_blocked" name="Rounak Portal Blocked">
+        <t t-call="portal.portal_layout">
+            <div class="container py-5">
+                <div class="rounak-card" style="max-width:480px;margin:0 auto;">
+                    <div style="background:#D13438;padding:12px 20px;color:#fff;font-weight:600;border-radius:8px 8px 0 0;">
+                        <i class="fa fa-lock me-2"/> Account Restricted
+                    </div>
+                    <div class="rounak-card-body text-center py-4">
+                        <p class="mb-3" style="font-size:15px;color:#323130;">
+                            Your portal access has been temporarily restricted.
+                        </p>
+                        <t t-if="reason">
+                            <p class="text-muted" style="font-size:13px;">
+                                Reason: <span t-esc="reason"/>
+                            </p>
+                        </t>
+                        <p class="text-muted" style="font-size:13px;">
+                            Please contact your account manager or email
+                            <a href="mailto:accounts@rounakcomputers.com">accounts@rounakcomputers.com</a>
+                            to resolve this.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

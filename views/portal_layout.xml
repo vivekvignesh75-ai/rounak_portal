@@ -22,6 +22,11 @@
                                       t-esc="badges['quotes']"/>
                             </a>
                         </li>
+                        <li t-attf-class="#{page_name == 'rounak_cart' and 'active' or ''}">
+                            <a href="/my/rounak/cart">
+                                <i class="fa fa-shopping-basket"/> Cart
+                            </a>
+                        </li>
                         <li t-attf-class="#{page_name == 'rounak_orders' and 'active' or ''}">
                             <a href="/my/rounak/orders">
                                 <i class="fa fa-shopping-cart"/> Sales Orders

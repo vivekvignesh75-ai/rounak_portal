@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_cart" name="Rounak Portal Cart">
+        <t t-call="rounak_portal.portal_rounak_layout">
+            <div class="rounak-page">
+                <h2 class="rounak-page-title">Cart</h2>
+
+                <div t-if="error" class="rounak-alert-banner rounak-alert-urgent mb-3">
+                    <i class="fa fa-exclamation-circle"/>
+                    <span t-esc="error"/>
+                </div>
+
+                <t t-if="order and order.order_line">
+                    <div class="rounak-card mb-3">
+                        <div class="rounak-card-header">
+                            <span>Order: <t t-esc="order.name"/></span>
+                        </div>
+                        <div class="rounak-card-body p-0">
+                            <table class="table rounak-table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th class="text-end">Unit Price</th>
+                                        <th class="text-center">Qty</th>
+                                        <th class="text-end">Subtotal</th>
+                                        <th/>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="order.order_line" t-as="line">
+                                        <tr>
+                                            <td t-esc="line.product_id.name"/>
+                                            <td class="text-end">
+                                                <t t-esc="line.price_unit"
+                                                   t-options="{'widget':'monetary','display_currency':order.currency_id}"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <form t-attf-action="/my/rounak/cart/update" method="post" class="d-inline">
+                                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                    <input type="hidden" name="line_id" t-att-value="line.id"/>
+                                                    <input type="number" name="qty" t-att-value="int(line.product_uom_qty)"
+                                                           min="0" class="form-control form-control-sm d-inline-block"
+                                                           style="width:70px;" onchange="this.form.submit()"/>
+                                                </form>
+                                            </td>
+                                            <td class="text-end">
+                                                <t t-esc="line.price_subtotal"
+                                                   t-options="{'widget':'monetary','display_currency':order.currency_id}"/>
+                                            </td>
+                                            <td>
+                                                <form t-attf-action="/my/rounak/cart/update" method="post" class="d-inline">
+                                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                    <input type="hidden" name="line_id" t-att-value="line.id"/>
+                                                    <input type="hidden" name="qty" value="0"/>
+                                                    <button type="submit" class="btn btn-sm rounak-btn-danger" title="Remove">
+                                                        <i class="fa fa-trash"/>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" class="text-end fw-bold">Total (incl. VAT)</td>
+                                        <td class="text-end fw-bold">
+                                            <t t-esc="order.amount_total"
+                                               t-options="{'widget':'monetary','display_currency':order.currency_id}"/>
+                                        </td>
+                                        <td/>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3 flex-wrap">
+                        <!-- Checkout -->
+                        <form action="/my/rounak/cart/checkout" method="post">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <button type="submit" class="btn rounak-btn-primary">
+                                <i class="fa fa-check"/> Proceed to Payment
+                            </button>
+                        </form>
+
+                        <!-- Discount request -->
+                        <div class="rounak-card" style="max-width:360px;">
+                            <div class="rounak-card-header">Request Discount</div>
+                            <div class="rounak-card-body">
+                                <form action="/my/rounak/cart/discount-request" method="post">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <div class="d-flex gap-2 mb-2">
+                                        <input type="number" name="discount_pct" min="1" max="50"
+                                               placeholder="%" class="form-control form-control-sm" style="width:70px;"/>
+                                        <input type="text" name="reason" placeholder="Reason"
+                                               class="form-control form-control-sm"/>
+                                    </div>
+                                    <button type="submit" class="btn btn-sm rounak-btn-outline">
+                                        <i class="fa fa-tag"/> Request
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+
+                <div t-if="not order or not order.order_line" class="rounak-card">
+                    <div class="rounak-card-body text-center py-5">
+                        <i class="fa fa-shopping-cart fa-3x text-muted mb-3 d-block"/>
+                        <p class="text-muted">Your cart is empty</p>
+                        <a href="/shop" class="btn rounak-btn-primary">Browse Catalog</a>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
