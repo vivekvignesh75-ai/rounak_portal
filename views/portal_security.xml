@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_security" name="Rounak Portal Security">
+        <t t-call="rounak_portal.portal_rounak_layout">
+            <div class="rounak-page">
+                <h2 class="rounak-page-title">Security</h2>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="rounak-card mb-3">
+                            <div class="rounak-card-header">Change Password</div>
+                            <div class="rounak-card-body">
+                                <p class="text-muted">
+                                    Use the Odoo password reset flow to change your password.
+                                </p>
+                                <a href="/web/reset_password" class="btn rounak-btn-outline">
+                                    <i class="fa fa-key"/> Reset Password
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="rounak-card mb-3">
+                            <div class="rounak-card-header">Two-Factor Authentication</div>
+                            <div class="rounak-card-body">
+                                <p>
+                                    Status:
+                                    <span t-if="user.rounak_2fa_enabled"
+                                          class="badge bg-success">Enabled</span>
+                                    <span t-else="" class="badge bg-secondary">Disabled</span>
+                                </p>
+                                <form action="/my/rounak/security/toggle_2fa" method="post">
+                                    <input type="hidden" name="csrf_token"
+                                           t-att-value="request.csrf_token()"/>
+                                    <button type="submit"
+                                            t-attf-class="btn #{user.rounak_2fa_enabled and 'rounak-btn-danger' or 'rounak-btn-primary'}">
+                                        <t t-if="user.rounak_2fa_enabled">Disable 2FA</t>
+                                        <t t-else="">Enable 2FA</t>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rounak-card">
+                    <div class="rounak-card-header">Active Sessions</div>
+                    <div class="rounak-card-body">
+                        <p class="text-muted">
+                            Session management is handled by Odoo's built-in security.
+                            To sign out of all devices, reset your password.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_support" name="Rounak Portal Support">
+        <t t-call="rounak_portal.portal_rounak_layout">
+            <div class="rounak-page">
+                <h2 class="rounak-page-title">Support</h2>
+
+                <div t-if="urgent_count" class="rounak-alert-banner rounak-alert-urgent">
+                    <i class="fa fa-exclamation-circle"/>
+                    <span><t t-esc="urgent_count"/> high-priority ticket(s) open</span>
+                </div>
+
+                <!-- Create ticket form -->
+                <div class="rounak-card mb-4">
+                    <div class="rounak-card-header">Create New Ticket</div>
+                    <div class="rounak-card-body">
+                        <form action="/my/rounak/support/create" method="post">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="mb-2">
+                                <input type="text" name="subject" class="form-control"
+                                       placeholder="Subject" required="required"/>
+                            </div>
+                            <div class="mb-2">
+                                <textarea name="description" class="form-control" rows="3"
+                                          placeholder="Describe your issue..."/>
+                            </div>
+                            <button type="submit" class="btn rounak-btn-primary">
+                                <i class="fa fa-paper-plane"/> Submit Ticket
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Filter tabs -->
+                <ul class="rounak-tabs">
+                    <li t-attf-class="#{status == 'all' and 'active' or ''}">
+                        <a href="/my/rounak/support?status=all">All</a>
+                    </li>
+                    <li t-attf-class="#{status == 'open' and 'active' or ''}">
+                        <a href="/my/rounak/support?status=open">Open</a>
+                    </li>
+                    <li t-attf-class="#{status == 'closed' and 'active' or ''}">
+                        <a href="/my/rounak/support?status=closed">Closed</a>
+                    </li>
+                </ul>
+
+                <table class="table rounak-table">
+                    <thead>
+                        <tr>
+                            <th>Ticket #</th>
+                            <th>Subject</th>
+                            <th>Created</th>
+                            <th>Stage</th>
+                            <th>Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="tickets" t-as="t">
+                            <tr>
+                                <td t-esc="t.name"/>
+                                <td t-esc="t.subject or t.name"/>
+                                <td t-esc="t.create_date" t-options="{'widget': 'date'}"/>
+                                <td>
+                                    <span class="badge rounak-badge-status"
+                                          t-esc="t.stage_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-if="t.priority"
+                                          class="badge rounak-badge-priority"
+                                          t-esc="t.priority.name if t.priority else ''"/>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr t-if="not tickets">
+                            <td colspan="5" class="text-muted text-center">No tickets found</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-center" t-if="pager">
+                    <t t-call="portal.pager"/>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

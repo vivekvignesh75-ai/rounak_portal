@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_notifications" name="Rounak Portal Notifications">
+        <t t-call="rounak_portal.portal_rounak_layout">
+            <div class="rounak-page">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="rounak-page-title mb-0">Notifications</h2>
+                    <form action="/my/rounak/notifications/mark_read" method="post">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <button type="submit" class="btn btn-sm rounak-btn-outline">
+                            <i class="fa fa-check-double"/> Mark all read
+                        </button>
+                    </form>
+                </div>
+
+                <div class="rounak-notif-list">
+                    <t t-foreach="notifications" t-as="notif">
+                        <div t-attf-class="rounak-notif-card #{not notif.is_read and 'unread' or ''}">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <div class="rounak-notif-title" t-esc="notif.title"/>
+                                    <div class="rounak-notif-body" t-raw="notif.body"/>
+                                    <div class="rounak-notif-meta">
+                                        <span class="badge rounak-badge-category"
+                                              t-esc="dict(notif._fields['category'].selection).get(notif.category, '')"/>
+                                        <span class="text-muted ms-2"
+                                              t-esc="notif.create_date" t-options="{'widget': 'datetime'}"/>
+                                    </div>
+                                </div>
+                                <div t-if="not notif.is_read">
+                                    <form t-attf-action="/my/rounak/notification/#{notif.id}/read"
+                                          method="post" class="d-inline">
+                                        <input type="hidden" name="csrf_token"
+                                               t-att-value="request.csrf_token()"/>
+                                        <button type="submit" class="btn btn-sm rounak-btn-outline"
+                                                title="Mark read">
+                                            <i class="fa fa-check"/>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <div t-if="not notifications" class="text-muted text-center py-4">
+                        No notifications
+                    </div>
+                </div>
+
+                <div class="text-center mt-3" t-if="pager">
+                    <t t-call="portal.pager"/>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

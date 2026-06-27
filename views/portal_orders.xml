@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_orders" name="Rounak Portal Orders">
+        <t t-call="rounak_portal.portal_rounak_layout">
+            <div class="rounak-page">
+                <h2 class="rounak-page-title">Sales Orders</h2>
+
+                <ul class="rounak-tabs">
+                    <li t-attf-class="#{status == 'all' and 'active' or ''}">
+                        <a href="/my/rounak/orders?status=all">All</a>
+                    </li>
+                    <li t-attf-class="#{status == 'in_progress' and 'active' or ''}">
+                        <a href="/my/rounak/orders?status=in_progress">In Progress</a>
+                    </li>
+                    <li t-attf-class="#{status == 'invoiced' and 'active' or ''}">
+                        <a href="/my/rounak/orders?status=invoiced">Invoiced</a>
+                    </li>
+                    <li t-attf-class="#{status == 'done' and 'active' or ''}">
+                        <a href="/my/rounak/orders?status=done">Completed</a>
+                    </li>
+                </ul>
+
+                <table class="table rounak-table">
+                    <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Date</th>
+                            <th>Customer</th>
+                            <th class="text-end">Total</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="orders" t-as="o">
+                            <tr>
+                                <td>
+                                    <a t-attf-href="/my/rounak/order/#{o.id}" t-esc="o.name"/>
+                                </td>
+                                <td t-esc="o.date_order" t-options="{'widget': 'date'}"/>
+                                <td t-esc="o.partner_id.name"/>
+                                <td class="text-end">
+                                    <t t-esc="o.amount_total"
+                                       t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                </td>
+                                <td>
+                                    <span class="badge rounak-badge-status"
+                                          t-esc="dict(o._fields['state'].selection).get(o.state)"/>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr t-if="not orders">
+                            <td colspan="5" class="text-muted text-center">No orders found</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-center" t-if="pager">
+                    <t t-call="portal.pager"/>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_order_detail" name="Rounak Portal Order Detail">
+        <t t-call="rounak_portal.portal_rounak_layout">
+            <div class="rounak-page">
+                <div class="d-flex align-items-center mb-3">
+                    <a href="/my/rounak/orders" class="rounak-back-link me-3">
+                        <i class="fa fa-arrow-left"/> Back
+                    </a>
+                    <h2 class="rounak-page-title mb-0" t-esc="order.name"/>
+                </div>
+
+                <div class="rounak-card">
+                    <div class="rounak-card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <dl class="rounak-dl">
+                                    <dt>Customer</dt>
+                                    <dd t-esc="order.partner_id.name"/>
+                                    <dt>Order Date</dt>
+                                    <dd t-esc="order.date_order" t-options="{'widget': 'date'}"/>
+                                    <dt>Salesperson</dt>
+                                    <dd t-esc="order.user_id.name or '—'"/>
+                                </dl>
+                            </div>
+                            <div class="col-md-6">
+                                <dl class="rounak-dl">
+                                    <dt>Status</dt>
+                                    <dd>
+                                        <span class="badge rounak-badge-status"
+                                              t-esc="dict(order._fields['state'].selection).get(order.state)"/>
+                                    </dd>
+                                    <dt>Total</dt>
+                                    <dd>
+                                        <t t-esc="order.amount_total"
+                                           t-options="{'widget': 'monetary', 'display_currency': order.currency_id}"/>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rounak-card mt-3">
+                    <div class="rounak-card-header">Order Lines</div>
+                    <div class="rounak-card-body p-0">
+                        <table class="table table-sm mb-0 rounak-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th class="text-end">Qty</th>
+                                    <th class="text-end">Unit Price</th>
+                                    <th class="text-end">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="order.order_line" t-as="line">
+                                    <tr>
+                                        <td t-esc="line.product_id.name"/>
+                                        <td class="text-end" t-esc="line.product_uom_qty"/>
+                                        <td class="text-end">
+                                            <t t-esc="line.price_unit"
+                                               t-options="{'widget': 'monetary', 'display_currency': order.currency_id}"/>
+                                        </td>
+                                        <td class="text-end">
+                                            <t t-esc="line.price_subtotal"
+                                               t-options="{'widget': 'monetary', 'display_currency': order.currency_id}"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

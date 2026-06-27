@@ -1,0 +1,288 @@
+/* Rounak Portal: shared page styles (tables, tabs, alerts, badges, buttons) */
+$rk-primary: #0078D4;
+$rk-primary-hover: #106EBE;
+$rk-border: #EDEBE9;
+$rk-text: #323130;
+$rk-secondary: #605E5C;
+$rk-bg: #F3F2F1;
+$rk-white: #ffffff;
+$rk-danger: #D13438;
+$rk-warning: #F7630C;
+$rk-success: #107C10;
+
+/* Tabs */
+.rounak-tabs {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid $rk-border;
+
+    li {
+        a {
+            display: block;
+            padding: 8px 16px;
+            color: $rk-secondary;
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: color 0.15s, border-color 0.15s;
+
+            &:hover {
+                color: $rk-text;
+            }
+        }
+
+        &.active a {
+            color: $rk-primary;
+            border-bottom-color: $rk-primary;
+            font-weight: 600;
+        }
+    }
+}
+
+/* Tables */
+.rounak-table {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 13.5px;
+
+    thead th {
+        background: $rk-bg;
+        color: $rk-secondary;
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        border-bottom: 1px solid $rk-border;
+        padding: 10px 12px;
+    }
+
+    tbody td {
+        padding: 10px 12px;
+        border-bottom: 1px solid lighten($rk-border, 3%);
+        color: $rk-text;
+        vertical-align: middle;
+    }
+
+    tbody tr:hover {
+        background: rgba(0, 120, 212, 0.04);
+    }
+
+    a {
+        color: $rk-primary;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.rounak-row-overdue {
+    background: rgba($rk-danger, 0.04) !important;
+
+    td {
+        color: $rk-danger;
+    }
+}
+
+/* Alert banners */
+.rounak-alert-banner {
+    background: rgba($rk-warning, 0.1);
+    border: 1px solid rgba($rk-warning, 0.3);
+    border-left: 3px solid $rk-warning;
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+    font-size: 13.5px;
+    color: $rk-text;
+
+    i {
+        color: $rk-warning;
+        margin-right: 8px;
+    }
+
+    &.rounak-alert-urgent {
+        background: rgba($rk-danger, 0.08);
+        border-color: rgba($rk-danger, 0.3);
+        border-left-color: $rk-danger;
+
+        i {
+            color: $rk-danger;
+        }
+    }
+}
+
+/* Badges */
+.rounak-badge-status {
+    background: $rk-bg;
+    color: $rk-secondary;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+.rounak-badge-category {
+    background: rgba($rk-primary, 0.1);
+    color: $rk-primary;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.rounak-badge-priority {
+    background: rgba($rk-warning, 0.15);
+    color: darken($rk-warning, 10%);
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+/* Buttons */
+.rounak-btn-primary {
+    background: $rk-primary;
+    color: $rk-white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 6px 16px;
+
+    &:hover {
+        background: $rk-primary-hover;
+        color: $rk-white;
+    }
+}
+
+.rounak-btn-outline {
+    background: transparent;
+    color: $rk-primary;
+    border: 1px solid $rk-border;
+    border-radius: 4px;
+    font-size: 13px;
+    padding: 5px 14px;
+
+    &:hover {
+        background: rgba($rk-primary, 0.06);
+        border-color: $rk-primary;
+        color: $rk-primary;
+    }
+}
+
+.rounak-btn-danger {
+    background: $rk-danger;
+    color: $rk-white;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    padding: 6px 16px;
+
+    &:hover {
+        background: darken($rk-danger, 8%);
+        color: $rk-white;
+    }
+}
+
+/* Back link */
+.rounak-back-link {
+    color: $rk-primary;
+    text-decoration: none;
+    font-size: 13px;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+/* Definition lists */
+.rounak-dl {
+    dt {
+        font-weight: 600;
+        color: $rk-secondary;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        margin-top: 8px;
+    }
+
+    dd {
+        color: $rk-text;
+        font-size: 14px;
+        margin-bottom: 4px;
+    }
+}
+
+/* Bank card */
+.rounak-bank-card {
+    background: $rk-bg;
+    border: 1px solid $rk-border;
+    border-radius: 6px;
+    padding: 16px;
+}
+
+/* Progress bars (subscriptions) */
+.rounak-progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rounak-progress {
+    height: 6px;
+    border-radius: 3px;
+    background: $rk-border;
+    width: 80px;
+
+    .progress-bar {
+        background: $rk-primary;
+        border-radius: 3px;
+    }
+}
+
+.rounak-progress-text {
+    font-size: 12px;
+    color: $rk-secondary;
+}
+
+/* Notification list (full page) */
+.rounak-notif-card {
+    background: $rk-white;
+    border: 1px solid $rk-border;
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+
+    &.unread {
+        border-left: 3px solid $rk-primary;
+        background: rgba($rk-primary, 0.02);
+    }
+
+    .rounak-notif-title {
+        font-size: 14px;
+    }
+
+    .rounak-notif-body {
+        font-size: 13px;
+        color: $rk-secondary;
+        margin-top: 4px;
+    }
+
+    .rounak-notif-meta {
+        margin-top: 6px;
+        font-size: 12px;
+    }
+}
+
+/* Payment row */
+.rounak-payment-row {
+    padding: 8px 0;
+    border-bottom: 1px solid lighten($rk-border, 3%);
+
+    &:last-child {
+        border-bottom: none;
+    }
+}

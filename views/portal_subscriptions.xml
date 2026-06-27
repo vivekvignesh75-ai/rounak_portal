@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_subscriptions" name="Rounak Portal Subscriptions">
+        <t t-call="rounak_portal.portal_rounak_layout">
+            <div class="rounak-page">
+                <h2 class="rounak-page-title">Subscriptions</h2>
+
+                <table class="table rounak-table">
+                    <thead>
+                        <tr>
+                            <th>Subscription</th>
+                            <th>Product</th>
+                            <th>Status</th>
+                            <th>Seats / Qty</th>
+                            <th>Renewal</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="subscriptions" t-as="sub">
+                            <tr>
+                                <td t-esc="sub.name"/>
+                                <td t-esc="sub.product_id.name if sub.product_id else '—'"/>
+                                <td>
+                                    <span class="badge rounak-badge-status"
+                                          t-esc="sub.stage"/>
+                                </td>
+                                <td>
+                                    <t t-if="sub.current_qty and sub.total_qty">
+                                        <div class="rounak-progress-wrap">
+                                            <div class="progress rounak-progress">
+                                                <div class="progress-bar"
+                                                     t-attf-style="width:#{int(sub.current_qty / sub.total_qty * 100) if sub.total_qty else 0}%"/>
+                                            </div>
+                                            <span class="rounak-progress-text">
+                                                <t t-esc="sub.current_qty"/> / <t t-esc="sub.total_qty"/>
+                                            </span>
+                                        </div>
+                                    </t>
+                                    <t t-else="">—</t>
+                                </td>
+                                <td t-esc="sub.next_invoice_date or '—'" t-options="{'widget': 'date'}"/>
+                                <td>
+                                    <form t-attf-action="/my/rounak/subscription/#{sub.id}/increase"
+                                          method="post" class="d-inline">
+                                        <input type="hidden" name="csrf_token"
+                                               t-att-value="request.csrf_token()"/>
+                                        <input type="number" name="qty" value="1" min="1"
+                                               class="form-control form-control-sm d-inline-block"
+                                               style="width:60px;"/>
+                                        <button type="submit" class="btn btn-sm rounak-btn-primary ms-1">
+                                            + Increase
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr t-if="not subscriptions">
+                            <td colspan="6" class="text-muted text-center">No subscriptions found</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-center" t-if="pager">
+                    <t t-call="portal.pager"/>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

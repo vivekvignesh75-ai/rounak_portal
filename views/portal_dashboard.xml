@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_dashboard" name="Rounak Portal Dashboard">
+        <t t-call="rounak_portal.portal_rounak_layout">
+            <div class="rounak-dashboard">
+                <h2 class="rounak-page-title">Dashboard</h2>
+
+                <!-- KPI Tiles -->
+                <div class="rounak-kpi-grid">
+                    <div class="rounak-kpi-tile">
+                        <div class="rounak-kpi-value" t-esc="'AED {:,.2f}'.format(kpis.get('total_spend', 0))"/>
+                        <div class="rounak-kpi-label">Total Spend</div>
+                    </div>
+                    <div class="rounak-kpi-tile">
+                        <div class="rounak-kpi-value" t-esc="kpis.get('pending_quotes', 0)"/>
+                        <div class="rounak-kpi-label">Open Quotes</div>
+                    </div>
+                    <div class="rounak-kpi-tile rounak-kpi-alert" t-if="kpis.get('due_invoices', 0)">
+                        <div class="rounak-kpi-value" t-esc="kpis.get('due_invoices', 0)"/>
+                        <div class="rounak-kpi-label">Due Invoices</div>
+                    </div>
+                    <div class="rounak-kpi-tile" t-if="not kpis.get('due_invoices', 0)">
+                        <div class="rounak-kpi-value">0</div>
+                        <div class="rounak-kpi-label">Due Invoices</div>
+                    </div>
+                    <div class="rounak-kpi-tile">
+                        <div class="rounak-kpi-value" t-esc="kpis.get('active_subs', 0)"/>
+                        <div class="rounak-kpi-label">Active Subs</div>
+                    </div>
+                    <div class="rounak-kpi-tile">
+                        <div class="rounak-kpi-value" t-esc="kpis.get('open_tickets', 0)"/>
+                        <div class="rounak-kpi-label">Open Tickets</div>
+                    </div>
+                    <div class="rounak-kpi-tile">
+                        <div class="rounak-kpi-value" t-esc="'AED {:,.0f}'.format(kpis.get('credit_available', 0))"/>
+                        <div class="rounak-kpi-label">Credit Available</div>
+                    </div>
+                    <div class="rounak-kpi-tile rounak-kpi-alert" t-if="kpis.get('overdue_invoices', 0)">
+                        <div class="rounak-kpi-value" t-esc="'AED {:,.0f}'.format(kpis.get('overdue_invoices', 0))"/>
+                        <div class="rounak-kpi-label">Overdue</div>
+                    </div>
+                    <div class="rounak-kpi-tile" t-if="not kpis.get('overdue_invoices', 0)">
+                        <div class="rounak-kpi-value">—</div>
+                        <div class="rounak-kpi-label">Overdue</div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <!-- Notifications Panel -->
+                    <div class="col-lg-5">
+                        <div class="rounak-card">
+                            <div class="rounak-card-header">
+                                <span>Recent Notifications</span>
+                                <a href="/my/rounak/notifications" class="rounak-link-sm">View all</a>
+                            </div>
+                            <div class="rounak-card-body">
+                                <t t-foreach="notifications" t-as="notif">
+                                    <div class="rounak-notif-row">
+                                        <div class="rounak-notif-dot"
+                                             t-attf-style="background:#{notif.importance == 'urgent' and '#D13438' or notif.importance == 'high' and '#F7630C' or '#0078D4'}"/>
+                                        <div>
+                                            <div class="rounak-notif-title" t-esc="notif.title"/>
+                                            <div class="rounak-notif-time" t-esc="notif.create_date"/>
+                                        </div>
+                                    </div>
+                                </t>
+                                <div t-if="not notifications" class="text-muted text-center py-3">
+                                    No new notifications
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions + Recent Orders -->
+                    <div class="col-lg-7">
+                        <div class="rounak-card mb-3">
+                            <div class="rounak-card-header">Quick Actions</div>
+                            <div class="rounak-card-body d-flex gap-2 flex-wrap">
+                                <a href="/my/rounak/quotations?status=pending" class="btn rounak-btn-outline">
+                                    <i class="fa fa-file-text-o"/> Pending Quotes
+                                </a>
+                                <a href="/my/rounak/support" class="btn rounak-btn-outline">
+                                    <i class="fa fa-plus"/> New Ticket
+                                </a>
+                                <a href="/my/rounak/invoices?status=due" class="btn rounak-btn-outline">
+                                    <i class="fa fa-exclamation-circle"/> Due Invoices
+                                </a>
+                                <a href="/my/rounak/subscriptions" class="btn rounak-btn-outline">
+                                    <i class="fa fa-refresh"/> Subscriptions
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="rounak-card">
+                            <div class="rounak-card-header">
+                                <span>Recent Orders</span>
+                                <a href="/my/rounak/orders" class="rounak-link-sm">View all</a>
+                            </div>
+                            <div class="rounak-card-body p-0">
+                                <table class="table table-sm mb-0 rounak-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Order</th>
+                                            <th>Date</th>
+                                            <th class="text-end">Amount</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="recent_orders" t-as="order">
+                                            <tr>
+                                                <td>
+                                                    <a t-attf-href="/my/rounak/order/#{order.id}"
+                                                       t-esc="order.name"/>
+                                                </td>
+                                                <td t-esc="order.date_order" t-options="{'widget': 'date'}"/>
+                                                <td class="text-end">
+                                                    <t t-esc="order.amount_total"
+                                                       t-options="{'widget': 'monetary', 'display_currency': order.currency_id}"/>
+                                                </td>
+                                                <td>
+                                                    <span class="badge rounak-badge-status"
+                                                          t-esc="dict(order._fields['state'].selection).get(order.state, order.state)"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <tr t-if="not recent_orders">
+                                            <td colspan="4" class="text-muted text-center">No recent orders</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

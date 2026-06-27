@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_settings" name="Rounak Portal Settings">
+        <t t-call="rounak_portal.portal_rounak_layout">
+            <div class="rounak-page">
+                <h2 class="rounak-page-title">Settings</h2>
+                <div class="rounak-card">
+                    <div class="rounak-card-body">
+                        <dl class="rounak-dl">
+                            <dt>Company</dt>
+                            <dd t-esc="partner.name"/>
+                            <dt>Email</dt>
+                            <dd t-esc="partner.email or '—'"/>
+                            <dt>Phone</dt>
+                            <dd t-esc="partner.phone or '—'"/>
+                            <dt>Payment Terms</dt>
+                            <dd t-esc="partner.rounak_payment_terms_code or 'Net 30'"/>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_trade_license" name="Rounak Portal Trade License">
+        <t t-call="rounak_portal.portal_rounak_layout">
+            <div class="rounak-page">
+                <h2 class="rounak-page-title">Trade License</h2>
+                <div class="rounak-card">
+                    <div class="rounak-card-body">
+                        <p class="text-muted">
+                            Your trade license details are maintained by your account manager.
+                            Contact support to update.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_domains" name="Rounak Portal Domains">
+        <t t-call="rounak_portal.portal_rounak_layout">
+            <div class="rounak-page">
+                <h2 class="rounak-page-title">Domains</h2>
+                <table class="table rounak-table">
+                    <thead>
+                        <tr>
+                            <th>Domain</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="domains" t-as="d">
+                            <tr>
+                                <td t-esc="d.name"/>
+                                <td>
+                                    <span class="badge rounak-badge-status"
+                                          t-esc="d.state if hasattr(d, 'state') else 'Active'"/>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr t-if="not domains">
+                            <td colspan="2" class="text-muted text-center">No domains registered</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_invoice_profiles" name="Rounak Portal Invoice Profiles">
+        <t t-call="rounak_portal.portal_rounak_layout">
+            <div class="rounak-page">
+                <h2 class="rounak-page-title">Invoice Profiles</h2>
+                <table class="table rounak-table">
+                    <thead>
+                        <tr>
+                            <th>Profile Name</th>
+                            <th>TRN</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="profiles" t-as="p">
+                            <tr>
+                                <td t-esc="p.name"/>
+                                <td t-esc="p.vat or '—'"/>
+                                <td t-esc="p.street or '—'"/>
+                            </tr>
+                        </t>
+                        <tr t-if="not profiles">
+                            <td colspan="3" class="text-muted text-center">No invoice profiles</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_terms" name="Rounak Portal Terms of Service">
+        <t t-call="rounak_portal.portal_rounak_layout">
+            <div class="rounak-page">
+                <h2 class="rounak-page-title">Terms of Service</h2>
+                <div class="rounak-card">
+                    <div class="rounak-card-body">
+                        <p>
+                            By using Rounak Computers services, you agree to our
+                            standard terms and conditions. These include:
+                        </p>
+                        <ul>
+                            <li>All prices are in AED and subject to 5% VAT</li>
+                            <li>Payment terms are as agreed with your account manager</li>
+                            <li>Software licenses are subject to vendor EULA</li>
+                            <li>Support SLAs are per your service agreement</li>
+                        </ul>
+                        <p class="text-muted">
+                            For the full terms, contact your account manager or
+                            email <a href="mailto:accounts@rounakcomputers.com">accounts@rounakcomputers.com</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,149 @@
+/* Rounak Portal: sidebar nav + layout */
+$rk-navy: #1B2A4A;
+$rk-primary: #0078D4;
+$rk-primary-hover: #106EBE;
+$rk-bg: #F3F2F1;
+$rk-border: #EDEBE9;
+$rk-text: #323130;
+$rk-secondary: #605E5C;
+$rk-white: #ffffff;
+$rk-sidebar-width: 240px;
+
+.rounak-portal-wrap {
+    min-height: calc(100vh - 60px);
+    background: $rk-bg;
+}
+
+.rounak-sidebar {
+    width: $rk-sidebar-width;
+    min-height: 100%;
+    background: $rk-navy;
+    padding: 0;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.rounak-sidebar-brand {
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    .rounak-sidebar-logo {
+        height: 28px;
+        width: auto;
+        filter: brightness(0) invert(1);
+    }
+}
+
+.rounak-sidebar-nav {
+    list-style: none;
+    padding: 8px 0;
+    margin: 0;
+
+    li {
+        margin: 0;
+
+        a {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            color: rgba(255, 255, 255, 0.75);
+            text-decoration: none;
+            font-size: 13.5px;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            transition: background 0.15s, color 0.15s, border-left-color 0.15s;
+            border-left: 3px solid transparent;
+
+            i {
+                width: 20px;
+                margin-right: 10px;
+                text-align: center;
+                font-size: 14px;
+            }
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.08);
+                color: $rk-white;
+            }
+        }
+
+        &.active a {
+            background: rgba(255, 255, 255, 0.12);
+            color: $rk-white;
+            font-weight: 600;
+            border-left-color: $rk-primary;
+        }
+    }
+
+    li.rounak-sidebar-divider {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.1);
+        margin: 8px 16px;
+    }
+}
+
+.rounak-badge {
+    background: $rk-primary;
+    color: $rk-white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 1px 7px;
+    border-radius: 10px;
+    margin-left: auto;
+}
+
+.rounak-main-content {
+    padding: 24px 32px;
+    max-width: calc(100% - #{$rk-sidebar-width});
+    overflow-x: hidden;
+}
+
+.rounak-page-title {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: $rk-text;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 991.98px) {
+    .rounak-portal-wrap {
+        flex-direction: column;
+    }
+
+    .rounak-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        overflow-y: visible;
+    }
+
+    .rounak-sidebar-nav {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 4px 8px;
+
+        li a {
+            padding: 8px 12px;
+            font-size: 12px;
+            border-left: none;
+            border-bottom: 2px solid transparent;
+        }
+
+        li.active a {
+            border-left-color: transparent;
+            border-bottom-color: $rk-primary;
+        }
+
+        li.rounak-sidebar-divider {
+            display: none;
+        }
+    }
+
+    .rounak-main-content {
+        max-width: 100%;
+        padding: 16px;
+    }
+}

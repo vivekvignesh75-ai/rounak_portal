@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+rounak_portal_notification_read,rounak.notification portal,rounak_erp.model_rounak_notification,base.group_portal,1,1,0,0
+rounak_portal_notification_type_read,rounak.notification.type portal,rounak_erp.model_rounak_notification_type,base.group_portal,1,0,0,0
+rounak_portal_notification_pref,rounak.notification.preference portal,rounak_erp.model_rounak_notification_preference,base.group_portal,1,1,1,1
+rounak_portal_mixin,rounak.portal.mixin portal,model_rounak_portal_mixin,base.group_portal,1,0,0,0

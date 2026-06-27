@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_quotations" name="Rounak Portal Quotations">
+        <t t-call="rounak_portal.portal_rounak_layout">
+            <div class="rounak-page">
+                <h2 class="rounak-page-title">Quotations</h2>
+
+                <!-- Pending alert banner -->
+                <div t-if="pending_count" class="rounak-alert-banner">
+                    <i class="fa fa-exclamation-triangle"/>
+                    <span><t t-esc="pending_count"/> quotation(s) pending your acceptance</span>
+                </div>
+
+                <!-- Status tabs -->
+                <ul class="rounak-tabs">
+                    <li t-attf-class="#{status == 'all' and 'active' or ''}">
+                        <a href="/my/rounak/quotations?status=all">All</a>
+                    </li>
+                    <li t-attf-class="#{status == 'pending' and 'active' or ''}">
+                        <a href="/my/rounak/quotations?status=pending">Pending</a>
+                    </li>
+                    <li t-attf-class="#{status == 'accepted' and 'active' or ''}">
+                        <a href="/my/rounak/quotations?status=accepted">Accepted</a>
+                    </li>
+                    <li t-attf-class="#{status == 'expired' and 'active' or ''}">
+                        <a href="/my/rounak/quotations?status=expired">Expired / Rejected</a>
+                    </li>
+                </ul>
+
+                <table class="table rounak-table">
+                    <thead>
+                        <tr>
+                            <th>Quotation #</th>
+                            <th>Date</th>
+                            <th>Expiry</th>
+                            <th class="text-end">Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="quotations" t-as="q">
+                            <tr>
+                                <td t-esc="q.name"/>
+                                <td t-esc="q.date_order" t-options="{'widget': 'date'}"/>
+                                <td t-esc="q.validity_date" t-options="{'widget': 'date'}"/>
+                                <td class="text-end">
+                                    <t t-esc="q.amount_total"
+                                       t-options="{'widget': 'monetary', 'display_currency': q.currency_id}"/>
+                                </td>
+                                <td>
+                                    <span class="badge rounak-badge-status"
+                                          t-esc="dict(q._fields['state'].selection).get(q.state)"/>
+                                </td>
+                                <td>
+                                    <t t-if="q.state in ('draft', 'sent')">
+                                        <form t-attf-action="/my/rounak/quotation/#{q.id}/accept" method="post" class="d-inline">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <button type="submit" class="btn btn-sm rounak-btn-primary">Accept</button>
+                                        </form>
+                                        <form t-attf-action="/my/rounak/quotation/#{q.id}/reject" method="post" class="d-inline ms-1">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <button type="submit" class="btn btn-sm rounak-btn-danger">Reject</button>
+                                        </form>
+                                    </t>
+                                    <a t-attf-href="/my/orders/#{q.id}?report_type=pdf"
+                                       class="btn btn-sm rounak-btn-outline" title="Download PDF">
+                                        <i class="fa fa-download"/>
+                                    </a>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr t-if="not quotations">
+                            <td colspan="6" class="text-muted text-center">No quotations found</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-center" t-if="pager">
+                    <t t-call="portal.pager"/>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

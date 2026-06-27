@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_payments" name="Rounak Portal Payments">
+        <t t-call="rounak_portal.portal_rounak_layout">
+            <div class="rounak-page">
+                <h2 class="rounak-page-title">Payment Methods</h2>
+
+                <!-- Saved payment tokens -->
+                <div class="rounak-card mb-4">
+                    <div class="rounak-card-header">Saved Payment Methods</div>
+                    <div class="rounak-card-body">
+                        <t t-foreach="tokens" t-as="token">
+                            <div class="rounak-payment-row d-flex align-items-center justify-content-between mb-2">
+                                <div>
+                                    <i class="fa fa-credit-card me-2"/>
+                                    <span t-esc="token.display_name"/>
+                                </div>
+                                <span class="badge rounak-badge-status"
+                                      t-esc="'Active' if token.active else 'Inactive'"/>
+                            </div>
+                        </t>
+                        <div t-if="not tokens" class="text-muted">
+                            No saved payment methods. Payment methods are added during checkout.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bank transfer details -->
+                <div class="rounak-card">
+                    <div class="rounak-card-header">Bank Transfer Details</div>
+                    <div class="rounak-card-body">
+                        <div class="row">
+                            <t t-foreach="bank_details.values()" t-as="bank">
+                                <div class="col-md-6 mb-3">
+                                    <div class="rounak-bank-card">
+                                        <h6 class="fw-bold" t-esc="bank['bank']"/>
+                                        <dl class="rounak-dl mb-0">
+                                            <dt>Account Name</dt>
+                                            <dd t-esc="bank['account_name']"/>
+                                            <dt>IBAN</dt>
+                                            <dd><code t-esc="bank['iban']"/></dd>
+                                            <dt>SWIFT</dt>
+                                            <dd><code t-esc="bank['swift']"/></dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,128 @@
+/* Rounak Portal: dashboard KPIs, cards, notifications */
+$rk-primary: #0078D4;
+$rk-border: #EDEBE9;
+$rk-text: #323130;
+$rk-secondary: #605E5C;
+$rk-bg: #F3F2F1;
+$rk-white: #ffffff;
+$rk-danger: #D13438;
+$rk-warning: #F7630C;
+
+.rounak-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.rounak-kpi-grid-sm {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+.rounak-kpi-tile {
+    background: $rk-white;
+    border: 1px solid $rk-border;
+    border-radius: 8px;
+    padding: 16px 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+    .rounak-kpi-value {
+        font-size: 24px;
+        font-weight: 600;
+        color: $rk-text;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    .rounak-kpi-label {
+        font-size: 12px;
+        color: $rk-secondary;
+        margin-top: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+    &.rounak-kpi-alert {
+        border-left: 3px solid $rk-danger;
+
+        .rounak-kpi-value {
+            color: $rk-danger;
+        }
+    }
+}
+
+.rounak-card {
+    background: $rk-white;
+    border: 1px solid $rk-border;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+.rounak-card-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid $rk-border;
+    font-weight: 600;
+    font-size: 14px;
+    color: $rk-text;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rounak-card-body {
+    padding: 16px;
+}
+
+.rounak-link-sm {
+    font-size: 12px;
+    color: $rk-primary;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.rounak-notif-row {
+    display: flex;
+    align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px solid lighten($rk-border, 3%);
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.rounak-notif-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 6px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.rounak-notif-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: $rk-text;
+}
+
+.rounak-notif-time {
+    font-size: 11px;
+    color: $rk-secondary;
+    margin-top: 2px;
+}
+
+@media (max-width: 991.98px) {
+    .rounak-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .rounak-kpi-grid {
+        grid-template-columns: 1fr;
+    }
+}

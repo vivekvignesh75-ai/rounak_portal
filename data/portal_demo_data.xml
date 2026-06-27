@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Demo data placeholder — actual records (SO, invoices, tickets)
+         already exist in the live database. This file ensures the demo
+         flag in the manifest has valid XML to load. -->
+</odoo>

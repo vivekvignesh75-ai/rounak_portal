@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- 4 department-specific live chat channels for routing -->
+    <record id="livechat_sales" model="im_livechat.channel">
+        <field name="name">Sales &amp; Enquiries</field>
+        <field name="button_text">Chat with Sales</field>
+        <field name="default_message">Welcome to Rounak Computers! How can we help you with sales today?</field>
+    </record>
+
+    <record id="livechat_support" model="im_livechat.channel">
+        <field name="name">Support &amp; Service</field>
+        <field name="button_text">Chat with Support</field>
+        <field name="default_message">Welcome to Rounak Support! Please describe your issue and we'll help right away.</field>
+    </record>
+
+    <record id="livechat_billing" model="im_livechat.channel">
+        <field name="name">Billing &amp; Accounts</field>
+        <field name="button_text">Chat with Billing</field>
+        <field name="default_message">Welcome! How can we assist you with billing or account matters?</field>
+    </record>
+
+    <record id="livechat_licensing" model="im_livechat.channel">
+        <field name="name">Licensing &amp; Subscriptions</field>
+        <field name="button_text">Chat with Licensing</field>
+        <field name="default_message">Welcome! How can we help with your licenses or subscriptions?</field>
+    </record>
+</odoo>

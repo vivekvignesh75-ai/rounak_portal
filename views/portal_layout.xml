@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Rounak portal sidebar layout wrapper -->
+    <template id="portal_rounak_layout" name="Rounak Portal Layout">
+        <t t-call="portal.portal_layout">
+            <div class="rounak-portal-wrap d-flex">
+                <!-- Sidebar -->
+                <nav class="rounak-sidebar">
+                    <div class="rounak-sidebar-brand">
+                        <img src="/web/binary/company_logo" alt="Rounak" class="rounak-sidebar-logo"/>
+                    </div>
+                    <ul class="rounak-sidebar-nav">
+                        <li t-attf-class="#{page_name == 'rounak_dashboard' and 'active' or ''}">
+                            <a href="/my/rounak/dashboard">
+                                <i class="fa fa-tachometer"/> Dashboard
+                            </a>
+                        </li>
+                        <li t-attf-class="#{page_name == 'rounak_quotations' and 'active' or ''}">
+                            <a href="/my/rounak/quotations">
+                                <i class="fa fa-file-text-o"/> Quotations
+                                <span t-if="badges.get('quotes')" class="rounak-badge"
+                                      t-esc="badges['quotes']"/>
+                            </a>
+                        </li>
+                        <li t-attf-class="#{page_name == 'rounak_orders' and 'active' or ''}">
+                            <a href="/my/rounak/orders">
+                                <i class="fa fa-shopping-cart"/> Sales Orders
+                            </a>
+                        </li>
+                        <li t-attf-class="#{page_name == 'rounak_invoices' and 'active' or ''}">
+                            <a href="/my/rounak/invoices">
+                                <i class="fa fa-file-o"/> Invoices
+                                <span t-if="badges.get('invoices')" class="rounak-badge"
+                                      t-esc="badges['invoices']"/>
+                            </a>
+                        </li>
+                        <li t-attf-class="#{page_name == 'rounak_payments' and 'active' or ''}">
+                            <a href="/my/rounak/payments">
+                                <i class="fa fa-credit-card"/> Payment Methods
+                            </a>
+                        </li>
+                        <li t-attf-class="#{page_name == 'rounak_subscriptions' and 'active' or ''}">
+                            <a href="/my/rounak/subscriptions">
+                                <i class="fa fa-refresh"/> Subscriptions
+                            </a>
+                        </li>
+
+                        <li class="rounak-sidebar-divider"/>
+
+                        <li t-attf-class="#{page_name == 'rounak_support' and 'active' or ''}">
+                            <a href="/my/rounak/support">
+                                <i class="fa fa-life-ring"/> Support
+                                <span t-if="badges.get('tickets')" class="rounak-badge"
+                                      t-esc="badges['tickets']"/>
+                            </a>
+                        </li>
+                        <li t-attf-class="#{page_name == 'rounak_notifications' and 'active' or ''}">
+                            <a href="/my/rounak/notifications">
+                                <i class="fa fa-bell-o"/> Notifications
+                                <span t-if="badges.get('notifications')" class="rounak-badge"
+                                      t-esc="badges['notifications']"/>
+                            </a>
+                        </li>
+
+                        <li class="rounak-sidebar-divider"/>
+
+                        <li t-attf-class="#{page_name == 'rounak_security' and 'active' or ''}">
+                            <a href="/my/rounak/security">
+                                <i class="fa fa-shield"/> Security
+                            </a>
+                        </li>
+                        <li t-attf-class="#{page_name == 'rounak_trade_license' and 'active' or ''}">
+                            <a href="/my/rounak/trade-license">
+                                <i class="fa fa-id-card-o"/> Trade License
+                            </a>
+                        </li>
+                        <li t-attf-class="#{page_name == 'rounak_domains' and 'active' or ''}">
+                            <a href="/my/rounak/domains">
+                                <i class="fa fa-globe"/> Domains
+                            </a>
+                        </li>
+                        <li t-attf-class="#{page_name == 'rounak_invoice_profiles' and 'active' or ''}">
+                            <a href="/my/rounak/invoice-profiles">
+                                <i class="fa fa-address-book-o"/> Invoice Profiles
+                            </a>
+                        </li>
+                        <li t-attf-class="#{page_name == 'rounak_terms' and 'active' or ''}">
+                            <a href="/my/rounak/terms">
+                                <i class="fa fa-gavel"/> Terms of Service
+                            </a>
+                        </li>
+                        <li t-attf-class="#{page_name == 'rounak_settings' and 'active' or ''}">
+                            <a href="/my/rounak/settings">
+                                <i class="fa fa-cog"/> Settings
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- Main content area -->
+                <main class="rounak-main-content flex-grow-1">
+                    <t t-raw="0"/>
+                </main>
+            </div>
+        </t>
+    </template>
+</odoo>
